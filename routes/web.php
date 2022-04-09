@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +14,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ *  GUEST ROUTES
+ */
 Route::get('/', function () {
     return view('guest.home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+/**
+ *  USER ROUTES
+ */
 
-require __DIR__.'/auth.php';
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::group(['prefix' => 'thrift'], function () {
+        Route::get('/groups', [ThriftGroupController::class, 'index'])->name('user.thrift.groups');
+    });
+});
+
+/**
+ *  ADMIN ROUTES
+ */
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('admin.dashboard');
+});
+
+
+require __DIR__ . '/auth.php';

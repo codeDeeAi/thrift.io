@@ -18,6 +18,7 @@ class CreateThriftGroupsTable extends Migration
             $table->foreignId('user_id');
             $table->uuid('token')->unique();
             $table->string('name');
+            $table->integer('trifters')->default(1);
             $table->float('amount', 10, 2);
             $table->float('total_amount', 10, 2);
             $table->json('details')->nullable();
