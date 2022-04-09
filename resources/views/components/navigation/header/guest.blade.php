@@ -1,8 +1,7 @@
-<header class="container w-full max-w-7xl">
+<header class="w-full">
     <div x-data="{ open: false }"
         class="
           flex flex-col
-          max-w-screen-xl
           p-5
           mx-auto
           md:items-center md:justify-between md:flex-row md:px-6

@@ -18,7 +18,7 @@ class ThriftGroup extends Model
         'user_id',
         'token',
         'name',
-        'trifters',
+        'thrifters',
         'amount',
         'total_amount',
         'details',

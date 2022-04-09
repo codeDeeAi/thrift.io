@@ -22,6 +22,12 @@ class ThriftGroupController extends Controller
         return view('user.thrift.groups.index', ['thrift_groups' => $thrift_groups]);
     }
 
+    // Show Create Page
+    public function create()
+    {
+        return view('user.thrift.groups.create');
+    }
+
     // Create new thrift group
     public function store(ThriftGroupFormRequest $request)
     {
@@ -29,14 +35,15 @@ class ThriftGroupController extends Controller
         try {
             $group = ThriftGroup::create([
                 'user_id' => auth()->id(),
-                // 'token',
+                'token' => generate_token(),
                 'name' => $request->name,
-                'trifters' => $request->thrifters,
+                'thrifters' => $request->thrifters,
                 'amount' => $request->amount,
                 'total_amount' => $request->amount * $request->thrifters,
                 'details' => $request->details,
-                'is_open' => $request->is_open,
+                'is_open' => ($request->is_open) ? $request->is_open : true,
             ]);
+
 
             UserThriftGroup::create([
                 'user_id' => auth()->id(),
@@ -45,11 +52,13 @@ class ThriftGroupController extends Controller
 
             DB::commit();
 
-            return route('user.thrift.groups');
+            return redirect()->route('user.thrift.groups');
             
         } catch (\Throwable $th) {
 
-            return back();
+            DB::rollBack();
+
+            return back()->withErrors(['msg' => json_encode($th, true)]);
         }
     }
 }

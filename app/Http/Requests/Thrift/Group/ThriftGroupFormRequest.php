@@ -25,7 +25,7 @@ class ThriftGroupFormRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'trifters' => 'required|integer',
+            'thrifters' => 'required|integer',
             'amount' => 'required|numeric',
             'details' => 'nullable|json',
             'is_open' => 'nullable|boolean',

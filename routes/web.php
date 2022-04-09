@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'thrift'], function () {
         Route::get('/groups', [ThriftGroupController::class, 'index'])->name('user.thrift.groups');
+        Route::get('/groups/create', [ThriftGroupController::class, 'create'])->name('user.thrift.groups.create');
+        Route::post('/groups/create', [ThriftGroupController::class, 'store'])->name('user.thrift.groups.create');
     });
 });
 

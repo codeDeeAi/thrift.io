@@ -51,6 +51,6 @@ class UserThriftGroup extends Model
      */
     public function thrift_group()
     {
-        return $this->hasOne(ThriftGroup::class, 'thrift_group_id', 'id');
+        return $this->hasOne(ThriftGroup::class, 'id', 'thrift_group_id');
     }
 }
