@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
+use App\Http\Controllers\Thrift\Members\ThriftMembersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/groups', [ThriftGroupController::class, 'index'])->name('user.thrift.groups');
         Route::get('/groups/create', [ThriftGroupController::class, 'create'])->name('user.thrift.groups.create');
         Route::post('/groups/create', [ThriftGroupController::class, 'store'])->name('user.thrift.groups.create');
+        Route::get('/group/{token}', [ThriftGroupController::class, 'show'])->name('user.thrift.groups.show');
+
+        Route::group(['prefix' => 'group/{token}'], function () {
+            Route::get('/members', [ThriftMembersController::class, 'index'])->name('user.thrift.members');
+        });
     });
 });
 

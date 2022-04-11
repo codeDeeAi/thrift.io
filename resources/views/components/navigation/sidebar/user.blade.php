@@ -1,4 +1,4 @@
-<div class="h-screen" :class="{ 'hidden': ! sidebar_open}" >
+<div class="h-screen" :class="{ 'hidden': ! sidebar_open}">
     <div class="flex flex-col w-64">
         <div class=" flex flex-col flex-grow pt-5 overflow-y-auto bg-white border-r border-gray-50">
             <div class="flex flex-col items-center flex-shrink-0 px-4">
@@ -42,7 +42,7 @@
                                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z">
                                     </path>
                                 </svg>
-                                <span class="ml-4">Thrift Groups</span>
+                                <span class="ml-4">Groups</span>
                             </a>
                         </li>
                         <li>
@@ -59,8 +59,8 @@
                         </li>
                         <li>
                             <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
-                                href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
                                     </path>
@@ -70,7 +70,74 @@
                                 <span class="ml-4">Settings</span></a>
                         </li>
                     </ul>
-                    <p class="px-4 pt-4 font-medium text-gray-900 uppercase"> Shortcuts </p>
+                    <p class="px-4 pt-4 font-medium text-gray-900 uppercase"> Groups </p>
+                    <ul>
+                        @foreach (get_user_thrift_groups() as $group)
+                            <li>
+                                <a class="inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                    white="" 70=""
+                                    href="{{ route('user.thrift.groups.show', ['token' => $group->thrift_group->token]) }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                    </svg>
+                                    <span class="ml-4"> {{ $group->thrift_group->name }}</span>
+                                </a>
+                                <ul class="pl-3">
+                                    <li>
+                                        <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                            white="" 70="" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                            </svg>
+                                            <span class="ml-4"> Overview </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                            white="" 70="" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                                </path>
+                                            </svg>
+                                            <span class="ml-4"> Activities </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                            white="" 70="" href="{{ route('user.thrift.members', ['token' => $group->thrift_group->token]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                            </svg>
+                                            <span class="ml-4"> Members </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                            href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                                                </path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            <span class="ml-4">Settings</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endforeach
+                    </ul>
+                    {{-- <p class="px-4 pt-4 font-medium text-gray-900 uppercase"> Shortcuts </p>
                     <ul>
                         <li>
                             <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
@@ -108,7 +175,7 @@
                                 <span class="ml-4"> Dashboard</span>
                             </a>
                         </li>
-                    </ul>
+                    </ul> --}}
                 </nav>
             </div>
         </div>

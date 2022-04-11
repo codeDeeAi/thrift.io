@@ -6,8 +6,6 @@
             href="{{ route('user.thrift.groups.create') }}">
             Create Group
         </a>
-
-        </a>
     </div>
     @if ($thrift_groups->count() < 1)
         <p class="text-center py-4">
@@ -17,7 +15,7 @@
     <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
         {{-- Each Group --}}
         @foreach ($thrift_groups as $group)
-            <a href=""
+            <a href="{{ route('user.thrift.groups.show', ['token' => $group->thrift_group->token ]) }}"
                 class="max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-lg shadow-blue-300 hover:shadow-blue-300 dark:bg-gray-800 mb-3">
 
                 <div class="px-6 py-4">

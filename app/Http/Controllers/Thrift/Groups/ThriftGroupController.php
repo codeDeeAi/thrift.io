@@ -53,12 +53,18 @@ class ThriftGroupController extends Controller
             DB::commit();
 
             return redirect()->route('user.thrift.groups');
-            
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             return back()->withErrors(['msg' => json_encode($th, true)]);
         }
+    }
+
+    // Show Group Page
+    public function show($token)
+    {
+        $data = ThriftGroup::where('token', $token)->first();
+        return view('user.thrift.groups.show', ['data' => $data]);
     }
 }
