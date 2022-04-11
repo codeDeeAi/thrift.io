@@ -12,7 +12,7 @@ Thrift.io is an application that helps with collection and organization of thrif
 
 ## Author
 
-Bada Adeola [Github page](https://github.com/codeDeeAi), if a full-stack software developer whose interests lies in creating
+Bada Adeola [Github page](https://github.com/codeDeeAi), is a full-stack software developer whose interests lies in creating
 effecient and scalable web based solutions.
 
 ## License
