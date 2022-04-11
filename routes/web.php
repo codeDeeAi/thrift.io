@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
 use App\Http\Controllers\Thrift\Members\ThriftMembersController;
+use App\Http\Controllers\Thrift\Settings\ThriftSettingsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'group/{token}'], function () {
             Route::get('/members', [ThriftMembersController::class, 'index'])->name('user.thrift.members');
+            Route::get('/settings', [ThriftSettingsController::class, 'index'])->name('user.thrift.settings');
         });
     });
 });

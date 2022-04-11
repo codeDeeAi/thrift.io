@@ -9,12 +9,12 @@
         <div class="flex justify-end border-b border-gray-200 dark:border-gray-700">
             @foreach ($tabs as $tab)
                 @if ($tab == 'members')
-                    <button disabled x-for="tab in tabs" @click="current_tab = {{ $tab }}"
+                    <button disabled 
                         class="h-10 px-2 py-1 -mb-px text-sm text-center text-blue-600 capitalize bg-transparent border-b-2 border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
                         {{ $tab }}
                     </button>
                 @else
-                    <button x-for="tab in tabs" @click="current_tab = {{ $tab }}"
+                    <button 
                         class="h-10 px-2 py-1 -mb-px text-sm text-center hover:text-blue-600 capitalize bg-transparent hover:border-b-2 hover:border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
                         {{ $tab }}
                     </button>
