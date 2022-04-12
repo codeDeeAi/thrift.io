@@ -19,7 +19,7 @@ class ThriftSettingsController extends Controller
     // Update Thrift settings
     public function update(ThriftGroupFormRequest $request, $token)
     {
-        $test = ThriftGroup::where('token', $token)->where('user_id', auth()->id())->update([
+        ThriftGroup::where('token', $token)->where('user_id', auth()->id())->update([
             'name' => $request->name,
             'thrifters' => $request->thrifters,
             'amount' => $request->amount,

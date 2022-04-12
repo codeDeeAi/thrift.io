@@ -58,117 +58,178 @@
                                     </button>
                                 </div>
                             </div>
-                            <form action="{{ route('user.thrift.settings', ['token' => $settings->token]) }}"
-                                method="POST" class="space-y-4">
-                                @csrf
+                            @if (auth()->id() === $settings->user_id)
+                                <form action="{{ route('user.thrift.settings', ['token' => $settings->token]) }}"
+                                    method="POST" class="space-y-4">
+                                    @csrf
 
-                                <!-- Name -->
-                                <div>
-                                    <x-auth.form.label for="name" :value="__('Name')" />
-
-                                    <x-auth.form.input id="name" class="block mt-1 w-full" type="text" name="name"
-                                        :value="$settings->name" required autofocus />
-                                </div>
-
-                                <!-- Thrifters -->
-                                <div>
-                                    <x-auth.form.label for="thrifters" :value="__('Thrifters (No of members)')" />
-
-                                    <x-auth.form.input id="thrifters" class="block mt-1 w-full" type="number"
-                                        name="thrifters" :value="$settings->thrifters" min="1" required autofocus />
-                                </div>
-
-                                <!-- Amount -->
-                                <div>
-                                    <x-auth.form.label for="amount" :value="__('Amount (per member)')" />
-
-                                    <x-auth.form.input id="amount" class="block mt-1 w-full" type="number" name="amount"
-                                        :value="$settings->amount" min="1" required autofocus />
-                                </div>
-
-                                <!-- Total Amount -->
-                                <div>
-                                    <x-auth.form.label for="total_amount" :value="__('Total Amount')" />
-
-                                    <x-auth.form.input id="total_amount" class="block mt-1 w-full" type="number"
-                                        name="amount" :value="$settings->amount * $settings->thrifters" min="1" required disabled autofocus />
-                                </div>
-
-                                <!-- Start Date -->
-                                <div>
-                                    <x-auth.form.label for="start_date" :value="__('Start Date')" />
-
-                                    <x-auth.form.input id="start_date" class="block mt-1 w-full" type="date"
-                                        name="start_date" value="{{ $settings->start_date }}" required autofocus />
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-8">
-                                    <!-- Thrift schedule -->
+                                    <!-- Name -->
                                     <div>
-                                        <x-auth.form.label for="schedule" :value="__('Thrift Schedule')" />
+                                        <x-auth.form.label for="name" :value="__('Name')" />
 
-                                        <div class="">
-                                            @php
-                                                $schedules = App\Enums\ThriftSchedule::getAll();
-                                            @endphp
+                                        <x-auth.form.input id="name" class="block mt-1 w-full" type="text" name="name"
+                                            :value="$settings->name" required autofocus />
+                                    </div>
 
-                                            <select name="schedule" id="schedule" value="{{ $settings->schedule }}"
-                                                class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
+                                    <!-- Thrifters -->
+                                    <div>
+                                        <x-auth.form.label for="thrifters" :value="__('Thrifters (No of members)')" />
+
+                                        <x-auth.form.input id="thrifters" class="block mt-1 w-full" type="number"
+                                            name="thrifters" :value="$settings->thrifters" min="1" required autofocus />
+                                    </div>
+
+                                    <!-- Amount -->
+                                    <div>
+                                        <x-auth.form.label for="amount" :value="__('Amount (per member)')" />
+
+                                        <x-auth.form.input id="amount" class="block mt-1 w-full" type="number" name="amount"
+                                            :value="$settings->amount" min="1" required autofocus />
+                                    </div>
+
+                                    <!-- Total Amount -->
+                                    <div>
+                                        <x-auth.form.label for="total_amount" :value="__('Total Amount')" />
+
+                                        <x-auth.form.input id="total_amount" class="block mt-1 w-full" type="number"
+                                            name="amount" :value="$settings->amount * $settings->thrifters" min="1" required disabled autofocus />
+                                    </div>
+
+                                    <!-- Start Date -->
+                                    <div>
+                                        <x-auth.form.label for="start_date" :value="__('Start Date')" />
+
+                                        <x-auth.form.input id="start_date" class="block mt-1 w-full" type="date"
+                                            name="start_date" value="{{ $settings->start_date }}" required autofocus />
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-8">
+                                        <!-- Thrift schedule -->
+                                        <div>
+                                            <x-auth.form.label for="schedule" :value="__('Thrift Schedule')" />
+
+                                            <div class="">
+                                                @php
+                                                    $schedules = App\Enums\ThriftSchedule::getAll();
+                                                @endphp
+
+                                                <select name="schedule" id="schedule" value="{{ $settings->schedule }}"
+                                                    class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
                                                 duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
                                                 bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
                                                 focus:ring-offset-gray-300 capitalize">
-                                                @foreach ($schedules as $schedule)
-                                                    @if ($settings->schedule === $schedule)
-                                                        <option value="{{ $schedule }}" selected>{{ $schedule }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $schedule }}">{{ $schedule }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
+                                                    @foreach ($schedules as $schedule)
+                                                        @if ($settings->schedule === $schedule)
+                                                            <option value="{{ $schedule }}" selected>{{ $schedule }}
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $schedule }}">{{ $schedule }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- Group active -->
-                                    <div>
-                                        <x-auth.form.label for="is_open" :value="__('Is group open for member registrations ?')" />
-                                        <select name="is_open" id="is_open" value="{{ $settings->is_open }}"
-                                            class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
+                                        <!-- Group active -->
+                                        <div>
+                                            <x-auth.form.label for="is_open" :value="__('Is group open for member registrations ?')" />
+                                            <select name="is_open" id="is_open" value="{{ $settings->is_open }}"
+                                                class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
                                         duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
                                         bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
                                         focus:ring-offset-gray-300 capitalize">
-                                            @php
-                                                $open_values = [1, 0];
-                                            @endphp
-                                            @foreach ($open_values as $val)
-                                                @if ($val === $settings->is_open)
-                                                    <option value="{{ $val }}" selected>
-                                                        {{ $val == 1 ? 'Yes' : 'No' }}
-                                                    </option>
-                                                @else
-                                                    <option value="{{ $val }}"> {{ $val == 1 ? 'Yes' : 'No' }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
+                                                @php
+                                                    $open_values = [1, 0];
+                                                @endphp
+                                                @foreach ($open_values as $val)
+                                                    @if ($val === $settings->is_open)
+                                                        <option value="{{ $val }}" selected>
+                                                            {{ $val == 1 ? 'Yes' : 'No' }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $val }}">
+                                                            {{ $val == 1 ? 'Yes' : 'No' }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
 
-                                        </select>
+                                            </select>
 
+                                        </div>
                                     </div>
-                                </div>
-                                {{-- Submit --}}
-                                <div class="flex justify-end">
-                                    <button
-                                        class="flex items-center px-2 py-2.5 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-                                        <svg class="w-5 h-5 mx-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                            fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        <span class="mx-1">Update Settings</span>
-                                    </button>
-                                </div>
-                                {{-- Submit Ends --}}
-                            </form>
+                                    {{-- Submit --}}
+                                    <div class="flex justify-end">
+                                        <button
+                                            class="flex items-center px-2 py-2.5 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                                            <svg class="w-5 h-5 mx-1" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="mx-1">Update Settings</span>
+                                        </button>
+                                    </div>
+                                    {{-- Submit Ends --}}
+                                </form>
+                            @else
+                                <ul class="list-none py-4 flex-col space-y-4">
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Name
+                                            </span>
+                                            <span>{{ $settings->name }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Start Date
+                                            </span>
+                                            <span>{{ $settings->start_date }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Schedule
+                                            </span>
+                                            <span>{{ $settings->schedule }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Amount per member
+                                            </span>
+                                            <span>{{ $settings->amount }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Total amount
+                                            </span>
+                                            <span>{{ $settings->amount * $settings->thrifters }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="space-y-2">
+                                        <button
+                                            class="flex items-center w-full px-4 py-2 justify-between text-blue-600 border border-blue-600 rounded-lg">
+                                            <span class="text-lg font-medium group-hover:text-white">
+                                                Max group size or members
+                                            </span>
+                                            <span>{{ $settings->thrifters }}</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            @endif
                         </div>
                     </div>
                 </div>
