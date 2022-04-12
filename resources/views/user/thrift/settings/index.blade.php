@@ -41,8 +41,10 @@
                                 <x-auth.form.label for="share_link" :value="__('Group Link')" />
 
                                 <div class="flex gap-3">
-                                    <x-auth.form.input id="share_link" class="block mt-1 w-full" type="text"
-                                        name="share_link" :value="$settings->token" required autofocus />
+                                    <x-auth.form.input id="share_link" class="block mt-1 w-full" type="text" disabled
+                                        name="share_link"
+                                        value="{{ route('thrift.group.registration', ['token' => $settings->token]) }}"
+                                        required autofocus />
 
                                     <button onclick="copyLink()"
                                         class="flex items-center px-2 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
@@ -56,8 +58,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <form action="{{ route('user.thrift.settings', ['token' => $settings->token]) }}" method="POST"
-                                class="space-y-4">
+                            <form action="{{ route('user.thrift.settings', ['token' => $settings->token]) }}"
+                                method="POST" class="space-y-4">
                                 @csrf
 
                                 <!-- Name -->

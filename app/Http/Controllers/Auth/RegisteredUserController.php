@@ -49,6 +49,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($request->query('group_registration')) {
+            add_user_to_thrift_group($request->query('group_registration'), $user->id);
+        }
+
         return redirect(RouteServiceProvider::USER_HOME);
     }
 }

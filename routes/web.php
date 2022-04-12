@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
+use App\Http\Controllers\Thrift\Groups\ThriftRegistrationController;
 use App\Http\Controllers\Thrift\Members\ThriftMembersController;
 use App\Http\Controllers\Thrift\Settings\ThriftSettingsController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('guest.home');
 });
+
+// Thrift registration
+Route::get('/group_registration/{token}', [ThriftRegistrationController::class, 'index'])->name('thrift.group.registration');
 
 /**
  *  USER ROUTES

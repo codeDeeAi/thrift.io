@@ -32,6 +32,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if ($request->group_registration) {
+            add_user_to_thrift_group($request->group_registration, auth()->id());
+        }
+
         return redirect()->intended((auth()->user()->is_admin) ? RouteServiceProvider::ADMIN_HOME : RouteServiceProvider::USER_HOME);
     }
 

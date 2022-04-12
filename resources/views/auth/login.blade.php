@@ -20,6 +20,13 @@
                             <form action="{{ route('login') }}" method="POST" class="space-y-6">
                                 @csrf
 
+                                {{-- If Group registration link --}}
+                                @if (request()->get('group_registration'))
+                                    <x-auth.form.input id="group_registration" class="block mt-1 w-full" type="hidden"
+                                        name="group_registration" value="{{ request()->get('group_registration') }}" />
+                                @endif
+                                {{-- If Group registration link Ends --}}
+
                                 <!-- Email Address -->
                                 <div>
                                     <x-auth.form.label for="email" :value="__('Email')" />
