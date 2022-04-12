@@ -4,6 +4,7 @@ use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
 use App\Http\Controllers\Thrift\Groups\ThriftRegistrationController;
 use App\Http\Controllers\Thrift\Members\ThriftMembersController;
 use App\Http\Controllers\Thrift\Settings\ThriftSettingsController;
+use App\Http\Controllers\Thrift\Slots\ThriftSlotController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/settings', [ThriftSettingsController::class, 'index'])->name('user.thrift.settings');
             Route::get('/overview', [ThriftSettingsController::class, 'index'])->name('user.thrift.overview');
             Route::get('/activities', [ThriftSettingsController::class, 'index'])->name('user.thrift.activities');
+            Route::get('/slots', [ThriftSlotController::class, 'index'])->name('user.thrift.slots');
 
             // Actions
             Route::post('/settings', [ThriftSettingsController::class, 'update'])->name('user.thrift.settings');

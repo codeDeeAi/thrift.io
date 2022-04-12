@@ -18,6 +18,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <script src="https://unpkg.com/vue@3"></script>
 </head>
 
 <body class="font-sans antialiased">
