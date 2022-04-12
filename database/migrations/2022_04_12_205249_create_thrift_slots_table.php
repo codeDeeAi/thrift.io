@@ -18,7 +18,6 @@ class CreateThriftSlotsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('thrift_group_id');
             $table->date('slot_date');
-            $table->integer('position');
             $table->string('status');
             $table->boolean('is_movable')->default(true);
             $table->longText('comment')->nullable();

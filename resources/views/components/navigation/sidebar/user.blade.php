@@ -121,7 +121,7 @@
                                         </a>
                                     </li>
 
-                                    @if (auth()->id() === $group->user_id)
+                                    @if (auth()->id() === $group->thrift_group->user_id)
                                         <li>
                                             <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
                                                 white="" 70=""

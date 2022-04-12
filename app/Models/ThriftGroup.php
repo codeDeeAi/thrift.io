@@ -26,6 +26,7 @@ class ThriftGroup extends Model
         'is_open',
         'start_date',
         'schedule',
+        'slot_positions'
     ];
 
     /**
@@ -42,6 +43,7 @@ class ThriftGroup extends Model
      */
     protected $casts = [
         'created_at' => 'datetime',
+        'slot_positions' => 'array'
         // 'schedule' => ThriftSchedule::class, // Only available for php 8.1
     ];
 

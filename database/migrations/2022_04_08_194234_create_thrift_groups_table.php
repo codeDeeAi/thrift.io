@@ -25,6 +25,7 @@ class CreateThriftGroupsTable extends Migration
             $table->boolean('is_open')->default(true);
             $table->date('start_date');
             $table->string('schedule');
+            $table->json('slot_positions')->nullable();
             $table->timestamps();
         });
     }

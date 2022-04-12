@@ -18,7 +18,6 @@ class ThriftSlot extends Model
         'user_id',
         'thrift_group_id',
         'slot_date',
-        'position',
         'status',
         'is_movable',
         'comment'

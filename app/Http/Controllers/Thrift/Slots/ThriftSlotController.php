@@ -13,7 +13,7 @@ class ThriftSlotController extends Controller
     // Show Thrift Slots
     public function index(Request $request, $token)
     {
-        $thrift_group = ThriftGroup::where('token', $token)->select('id', 'user_id', 'token', 'name', 'thrifters', 'start_date', 'schedule')->first();
+        $thrift_group = ThriftGroup::where('token', $token)->select('id', 'user_id', 'token', 'name', 'thrifters', 'start_date', 'schedule', 'slot_positions')->first();
         if ($thrift_group->user_id === auth()->id()) {
             $members = UserThriftGroup::where('thrift_group_id', $thrift_group->id)
                 ->select('id', 'user_id', 'thrift_group_id', 'created_at')
@@ -22,7 +22,7 @@ class ThriftSlotController extends Controller
                 })->get();
 
             $slots = ThriftSlot::where('thrift_group_id', $thrift_group->id)
-                ->select('id', 'user_id', 'thrift_group_id', 'slot_date', 'position', 'status', 'is_movable', 'comment')->with('user', function ($query) {
+                ->select('id', 'user_id', 'thrift_group_id', 'slot_date', 'status', 'is_movable', 'comment')->with('user', function ($query) {
                     $query->select('id', 'name', 'email');
                 })->get();
 
