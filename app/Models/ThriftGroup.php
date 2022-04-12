@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ThriftSchedule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,6 +24,8 @@ class ThriftGroup extends Model
         'total_amount',
         'details',
         'is_open',
+        'start_date',
+        'schedule',
     ];
 
     /**
@@ -39,6 +42,7 @@ class ThriftGroup extends Model
      */
     protected $casts = [
         'created_at' => 'datetime',
+        // 'schedule' => ThriftSchedule::class, // Only available for php 8.1
     ];
 
     /**

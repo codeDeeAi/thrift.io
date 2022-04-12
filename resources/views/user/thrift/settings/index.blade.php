@@ -14,17 +14,17 @@
                         {{ $tab }}
                     </button>
                 @else
-                    <button
+                    <a href="{{ route('user.thrift.' . $tab, ['token' => $settings->token]) }}"
                         class="h-10 px-2 py-1 -mb-px text-sm text-center hover:text-blue-600 capitalize bg-transparent hover:border-b-2 hover:border-blue-500 sm:text-base dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
                         {{ $tab }}
-                    </button>
+                    </a>
                 @endif
             @endforeach
         </div>
         {{-- Headers Ends --}}
 
         {{-- Content --}}
-        {{-- Thrifters --}}
+        {{-- Settings --}}
         <div class="py-8">
             <section class="">
                 <div class="max-w-screen-md px-4 mx-auto sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@
                                         name="share_link" :value="$settings->token" required autofocus />
 
                                     <button onclick="copyLink()"
-                                        class="flex items-center px-2 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                                        class="flex items-center px-2 py-1 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                                         <svg class="w-5 h-5 mx-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                                             fill="currentColor">
                                             <path fill-rule="evenodd"
@@ -56,7 +56,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <form action="" class="space-y-4">
+                            <form action="{{ route('user.thrift.settings', ['token' => $settings->token]) }}" method="POST"
+                                class="space-y-4">
                                 @csrf
 
                                 <!-- Name -->
@@ -96,7 +97,7 @@
                                     <x-auth.form.label for="start_date" :value="__('Start Date')" />
 
                                     <x-auth.form.input id="start_date" class="block mt-1 w-full" type="date"
-                                        name="start_date" value="" required autofocus />
+                                        name="start_date" value="{{ $settings->start_date }}" required autofocus />
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-8">
@@ -106,37 +107,51 @@
 
                                         <div class="">
                                             @php
-                                                $schedules = ['daily', 'weekly', 'monthly'];
+                                                $schedules = App\Enums\ThriftSchedule::getAll();
                                             @endphp
 
-                                            <select name="schedule" id="schedule"
+                                            <select name="schedule" id="schedule" value="{{ $settings->schedule }}"
                                                 class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
                                                 duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
                                                 bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
                                                 focus:ring-offset-gray-300 capitalize">
                                                 @foreach ($schedules as $schedule)
-                                                    <option value="{{ $schedule }}">{{ $schedule }}</option>
+                                                    @if ($settings->schedule === $schedule)
+                                                        <option value="{{ $schedule }}" selected>{{ $schedule }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $schedule }}">{{ $schedule }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
-
                                     <!-- Group active -->
                                     <div>
                                         <x-auth.form.label for="is_open" :value="__('Is group open for member registrations ?')" />
-
-                                        <select name="schedule" id="is_open" value="{{ $settings->is_open }}"
+                                        <select name="is_open" id="is_open" value="{{ $settings->is_open }}"
                                             class="block w-full px-5 py-3 text-base placeholder-gray-300 transition 
                                         duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
                                         bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
                                         focus:ring-offset-gray-300 capitalize">
-                                            <option :value="1"> Yes </option>
-                                            <option :value="2"> No </option>
+                                            @php
+                                                $open_values = [1, 0];
+                                            @endphp
+                                            @foreach ($open_values as $val)
+                                                @if ($val === $settings->is_open)
+                                                    <option value="{{ $val }}" selected>
+                                                        {{ $val == 1 ? 'Yes' : 'No' }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $val }}"> {{ $val == 1 ? 'Yes' : 'No' }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+
                                         </select>
 
                                     </div>
                                 </div>
-
                                 {{-- Submit --}}
                                 <div class="flex justify-end">
                                     <button
@@ -157,7 +172,7 @@
                 </div>
             </section>
         </div>
-        {{-- Thrifters Ends --}}
+        {{-- Settings Ends --}}
         {{-- Content Ends --}}
     </div>
     <script>

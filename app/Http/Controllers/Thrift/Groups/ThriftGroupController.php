@@ -40,8 +40,10 @@ class ThriftGroupController extends Controller
                 'thrifters' => $request->thrifters,
                 'amount' => $request->amount,
                 'total_amount' => $request->amount * $request->thrifters,
+                'schedule' => $request->schedule,
+                'start_date' => $request->start_date,
                 'details' => $request->details,
-                'is_open' => ($request->is_open) ? $request->is_open : true,
+                'is_open' => $request->is_open,
             ]);
 
 
@@ -57,7 +59,7 @@ class ThriftGroupController extends Controller
 
             DB::rollBack();
 
-            return back()->withErrors(['msg' => json_encode($th, true)]);
+            return back()->withErrors(['msg' => json_encode($th)]);
         }
     }
 

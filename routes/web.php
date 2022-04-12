@@ -39,8 +39,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/group/{token}', [ThriftGroupController::class, 'show'])->name('user.thrift.groups.show');
 
         Route::group(['prefix' => 'group/{token}'], function () {
+            // Views
             Route::get('/members', [ThriftMembersController::class, 'index'])->name('user.thrift.members');
             Route::get('/settings', [ThriftSettingsController::class, 'index'])->name('user.thrift.settings');
+            Route::get('/overview', [ThriftSettingsController::class, 'index'])->name('user.thrift.overview');
+            Route::get('/activities', [ThriftSettingsController::class, 'index'])->name('user.thrift.activities');
+
+            // Actions
+            Route::post('/settings', [ThriftSettingsController::class, 'update'])->name('user.thrift.settings');
         });
     });
 });

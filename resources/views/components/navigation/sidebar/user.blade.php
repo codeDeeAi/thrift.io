@@ -1,4 +1,4 @@
-<div class="h-screen" :class="{ 'hidden': ! sidebar_open}">
+<div class="h-screen overflow-y-auto" :class="{ 'hidden': ! sidebar_open}">
     <div class="flex flex-col w-64">
         <div class=" flex flex-col flex-grow pt-5 overflow-y-auto bg-white border-r border-gray-50">
             <div class="flex flex-col items-center flex-shrink-0 px-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Thrift\Group;
 
+use App\Enums\ThriftSchedule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ThriftGroupFormRequest extends FormRequest
@@ -28,7 +29,9 @@ class ThriftGroupFormRequest extends FormRequest
             'thrifters' => 'required|integer',
             'amount' => 'required|numeric',
             'details' => 'nullable|json',
-            'is_open' => 'nullable|boolean',
+            'is_open' => 'required|boolean',
+            'start_date' => 'required|date',
+            'schedule' => 'required|in:' . implode(',', ThriftSchedule::getAll()),
         ];
     }
 }
