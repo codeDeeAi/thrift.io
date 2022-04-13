@@ -102,6 +102,10 @@
                             class="px-2 py-1 mb-2 font-sm text-xs tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500">
                             Swap
                         </button>
+                        <button v-if="slots.length == max_slot_size" v-on:click="saveSlotForm()"
+                            class="px-2 py-1 mb-2 font-sm text-xs tracking-wide text-white capitalize transition-colors duration-200 transform bg-purple-600 rounded-md hover:bg-purple-500">
+                            Save Slots
+                        </button>
                     </div>
                 </div>
                 <div class="overflow-hidden overflow-x-auto border border-gray-100 rounded">
@@ -121,9 +125,9 @@
                         <tbody class="divide-y divide-gray-100">
                             <tr v-for="(slot, index) in slots" :key="index">
                                 <td v-if="is_swap_active" class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <button class="p-2 text-blue-600 rounded "
-                                            v-on:click="addOrRemovePositionSwap(index)"
+                                    <div v-if="slot.slot.is_movable" class="flex items-center">
+                                        <button v-if="slot.slot.status == '{{ App\Enums\ThriftSlotStatus::UNPAID }}'"
+                                            class="p-2 text-blue-600 rounded " v-on:click="addOrRemovePositionSwap(index)"
                                             v-bind:class="{'bg-blue-500' : slot_position_swap.includes(index), 'bg-gray-200': !slot_position_swap.includes(index) }">
                                         </button>
                                     </div>
@@ -145,20 +149,17 @@
                                     comment
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                    <button v-if="slot.slot.is_movable"
-                                        class="relative inline-flex cursor-grab items-center px-3 overflow-hidden text-red-600 border border-current rounded group active:text-red-500 focus:outline-none focus:ring"
-                                        type="button" v-on:click="removeFromSlot(index)">
-                                        <span>Delete</span>
-                                    </button>
+                                    <div v-if="slot.slot.is_movable">
+                                        <button v-if="slot.slot.status == '{{ App\Enums\ThriftSlotStatus::UNPAID }}'"
+                                            class="relative inline-flex cursor-grab items-center px-3 overflow-hidden text-red-600 border border-current rounded group active:text-red-500 focus:outline-none focus:ring"
+                                            type="button" v-on:click="removeFromSlot(index)">
+                                            <span>Delete</span>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
 
-                        {{-- Form For Slots --}}
-                        <form id="final_slot_form" action="" method="post">
-                            <input type="hidden" name="slots_data" id="slots_data">
-                        </form>
-                        {{-- Form For Slots End --}}
                     </table>
                 </div>
             </div>
@@ -166,6 +167,14 @@
         </div>
         {{-- Content Ends --}}
     </div>
+
+    {{-- Form For Slots --}}
+    <form id="final_slot_form" action="{{ route('user.thrift.slots', ['token' => $thrift_group->token]) }}" method="POST">
+        @csrf
+        <input type="hidden" name="slots_data" id="slots_data">
+    </form>
+    {{-- Form For Slots End --}}
+
     <input type="hidden" id="members_raw_data" value="{{ json_encode($members) }}">
     <input type="hidden" id="slots_raw_data" value="{{ json_encode($slots) }}">
     <input type="hidden" id="thrift_group_raw_data" value="{{ json_encode($thrift_group) }}">
@@ -206,7 +215,7 @@
                     // Attach final slot to slot form and submit
                     let form_data = document.getElementById('slots_data');
                     form_data.value = JSON.stringify(final_slots);
-                    
+
                     document.getElementById('final_slot_form').submit(); // Submit form
 
                 },
@@ -228,6 +237,7 @@
                         member: member,
                         slot: {
                             is_movable: true,
+                            status: '{{ App\Enums\ThriftSlotStatus::UNPAID }}',
                         }
                     }
                     this.slots.push(slot_template);

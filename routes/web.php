@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             // Actions
             Route::post('/settings', [ThriftSettingsController::class, 'update'])->name('user.thrift.settings');
+            Route::post('/slots', [ThriftSlotController::class, 'store'])->name('user.thrift.slots');
         });
     });
 });

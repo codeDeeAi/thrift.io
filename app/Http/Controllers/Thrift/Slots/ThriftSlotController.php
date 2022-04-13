@@ -32,4 +32,16 @@ class ThriftSlotController extends Controller
         return back();
         // return view('user.thrift.settings.index', ['settings' => $settings]);
     }
+
+    // Store and Update Slots
+    public function store(Request $request, $token)
+    {
+        $this->validate($request, [
+            'slots_data' => 'required|string'
+        ]);
+
+        $slot_data = json_decode($request->slots_data,true);
+
+        dd($slot_data);
+    }
 }
