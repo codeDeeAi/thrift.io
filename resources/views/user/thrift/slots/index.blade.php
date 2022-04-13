@@ -54,7 +54,6 @@
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Name</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Email</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Joined</th>
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Badge</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Options</th>
                             </tr>
                         </thead>
@@ -65,16 +64,6 @@
                                     @{{ member.user.name }}</td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">@{{ member.user.email }}</td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">@{{ member.created_at }}</td>
-                                <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                    {{-- <strong v-if="member.thrift_group.user_id === member.user_id"
-                                        class="border text-green-500 border-current uppercase px-2 py-1 rounded-full text-[10px] tracking-wide">
-                                        Admin
-                                    </strong>
-                                    <strong v-else
-                                        class="border text-blue-500 border-current uppercase px-2 py-1 rounded-full text-[10px] tracking-wide">
-                                        Member
-                                    </strong> --}}
-                                </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                     <!-- Border - Right -->
                                     <button
@@ -101,11 +90,26 @@
             {{-- Slots --}}
             {{-- 'id', 'user_id', 'thrift_group_id', 'slot_date', 'position', 'status', 'is_movable', 'comment' --}}
             <div class="shadow-sm rounded-lg p-3 overflow-auto border">
-                <p class="font-bold h3 mb-1">Slots</p>
+                <div class="flex justify-between">
+                    <p class="font-bold h3 mb-1">Slots</p>
+                    <div class="flex gap-2">
+                        <button v-if="slots.length > 1"
+                            v-on:click="is_swap_active = !is_swap_active; slot_position_swap = [];"
+                            class="px-2 py-1 mb-2 font-sm text-xs tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500">
+                            @{{ (!is_swap_active) ? 'Start Swap' : 'End Swap' }}
+                        </button>
+                        <button v-if="slot_position_swap.length == 2" v-on:click="swapSlotPosition()"
+                            class="px-2 py-1 mb-2 font-sm text-xs tracking-wide text-white capitalize transition-colors duration-200 transform bg-green-600 rounded-md hover:bg-green-500">
+                            Swap
+                        </button>
+                    </div>
+                </div>
                 <div class="overflow-hidden overflow-x-auto border border-gray-100 rounded">
                     <table id="slots_table" class="min-w-full text-sm divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-gray-50">
+                                <th v-if="is_swap_active"
+                                    class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap"></th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Position</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">User</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Date</th>
@@ -114,22 +118,34 @@
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Options</th>
                             </tr>
                         </thead>
-
                         <tbody class="divide-y divide-gray-100">
                             <tr v-for="(slot, index) in slots" :key="index">
+                                <td v-if="is_swap_active" class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <button class="p-2 text-blue-600 rounded "
+                                            v-on:click="addOrRemovePositionSwap(index)"
+                                            v-bind:class="{'bg-blue-500' : slot_position_swap.includes(index), 'bg-gray-200': !slot_position_swap.includes(index) }">
+                                        </button>
+                                    </div>
+                                </td>
                                 <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                                     @{{ index + 1 }}
                                 </td>
-                                <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-
+                                <td class="flex-col px-4 py-2 text-gray-700 whitespace-nowrap">
+                                    <p>@{{ slot?.member?.user?.name }}</p>
+                                    <p>@{{ slot?.member?.user?.email }}</p>
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                    @{{ slot.created_at }}
+                                    @{{ slot?.slot?.created_at }}
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
+                                    @{{ slot?.slot?.status }}
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                    <button
+                                    comment
+                                </td>
+                                <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
+                                    <button v-if="slot.slot.is_movable"
                                         class="relative inline-flex cursor-grab items-center px-3 overflow-hidden text-red-600 border border-current rounded group active:text-red-500 focus:outline-none focus:ring"
                                         type="button" v-on:click="removeFromSlot(index)">
                                         <span>Delete</span>
@@ -137,6 +153,12 @@
                                 </td>
                             </tr>
                         </tbody>
+
+                        {{-- Form For Slots --}}
+                        <form id="final_slot_form" action="" method="post">
+                            <input type="hidden" name="slots_data" id="slots_data">
+                        </form>
+                        {{-- Form For Slots End --}}
                     </table>
                 </div>
             </div>
@@ -153,7 +175,9 @@
                 return {
                     message: 'Hello Vue!',
                     members: [],
+                    slot_position_swap: [],
                     slots: [],
+                    is_swap_active: false,
                     max_slot_size: parseInt('{{ $thrift_group->thrifters }}'),
                     raw_slots: [],
                     trift_groups: [],
@@ -167,26 +191,106 @@
                     this.thrift_groups = JSON.parse(document.getElementById('thrift_group_raw_data').value);
                 },
 
+                // Save Slot Form
+                saveSlotForm() {
+                    if (this.slots.length < this.max_slot_size) {
+                        alert(`Slots must be equal to ${this.max_slot_size}`)
+                        return;
+                    }
+
+                    // Clone slots
+                    let final_slots = JSON.parse(JSON.stringify(this.slots));
+
+                    // Perform transform and checks on final_slot
+
+                    // Attach final slot to slot form and submit
+                    let form_data = document.getElementById('slots_data');
+                    form_data.value = JSON.stringify(final_slots);
+                    
+                    document.getElementById('final_slot_form').submit(); // Submit form
+
+                },
+
+                // Sort Saved slots
+                sortSavedSlots() {
+                    /***/
+                    // trift_groups.slot_positions
+                },
+
                 // Add to slots
                 addToSlot(member) {
                     if (this.slots.length >= this.max_slot_size) {
                         alert('Max slot size exceeded');
                         return;
                     };
-                    this.slots.push(member);
-                    this.slots.sort((a, b) => {
-                        // Sort by id
-                        return a.id - b.id
-                    })
+                    let slot_template = {
+                        user_id: member.id,
+                        member: member,
+                        slot: {
+                            is_movable: true,
+                        }
+                    }
+                    this.slots.push(slot_template);
+                    // this.slots.sort((a, b) => {
+                    //     // Sort by position
+                    //     return a.position - b.position
+                    // })
                 },
 
                 // Remove From Slots
                 removeFromSlot(index) {
                     this.slots.splice(index, 1);
-                    this.slots.sort((a, b) => {
-                        // Sort by id
-                        return a.id - b.id
-                    })
+                    // this.slots.sort((a, b) => {
+                    //     // Sort by position
+                    //     return a.position - b.position
+                    // })
+                },
+
+                // Add slot to position swap
+                addOrRemovePositionSwap(slot_index) {
+                    if (this.slot_position_swap.includes(slot_index)) {
+                        for (let index = 0; index < this.slot_position_swap.length; index++) {
+                            const element = this.slot_position_swap[index];
+                            if (element == slot_index) {
+                                this.slot_position_swap.splice(index, 1)
+                            }
+                        }
+                        return;
+                    }
+                    if (this.slot_position_swap.length >= 2) {
+                        alert('Cannot swap more than two positions at a time')
+                        return;
+                    }
+
+                    if (!this.slots[slot_index].slot.is_movable) {
+                        alert('This item is fixed and cannot be swapped')
+                        return;
+                    }
+
+                    this.slot_position_swap.push(slot_index);
+                },
+
+                // Swap Position
+                swapSlotPosition() {
+                    let from_item_index = null;
+                    let to_item_index = null;
+
+                    for (let index = 0; index < this.slots.length; index++) {
+                        if (index == this.slot_position_swap[0]) {
+                            from_item_index = index;
+                        }
+                        if (index == this.slot_position_swap[1]) {
+                            to_item_index = index
+                        }
+                    }
+                    // replace items
+                    let from_item = JSON.parse(JSON.stringify(this.slots[from_item_index]))
+                    let to_item = JSON.parse(JSON.stringify(this.slots[to_item_index]))
+
+                    this.slots[from_item_index] = to_item;
+                    this.slots[to_item_index] = from_item;
+
+                    this.slot_position_swap = [];
                 }
             },
             created() {
