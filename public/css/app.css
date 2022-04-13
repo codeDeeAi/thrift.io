@@ -830,6 +830,9 @@ select {
 .mb-1 {
   margin-bottom: 0.25rem;
 }
+.-ml-8 {
+  margin-left: -2rem;
+}
 .block {
   display: block;
 }
@@ -1636,6 +1639,9 @@ select {
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
+}
+.text-\[12px\] {
+  font-size: 12px;
 }
 .font-medium {
   font-weight: 500;

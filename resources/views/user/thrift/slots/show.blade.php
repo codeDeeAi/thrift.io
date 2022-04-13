@@ -82,11 +82,15 @@
                                         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
                                             {{ $slot->created_at }}</td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap capitalize">
-                                            {{ $slot->status }}
+                                            <strong class="inline-flex items-center bg-gray-100 px-5 py-1.5 rounded-full">
+                                                <span class="text-[12px] font-medium">
+                                                    {{ $slot->status }}
+                                                </span>
+                                            </strong>
                                         </td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap"> <select name="is_movable"
                                                 id="is_movable" value="{{ $slot->is_movable }}"
-                                                class="block w-full px-8 py-2 text-base placeholder-gray-300 transition 
+                                                class="block py-2 text-base placeholder-gray-300 transition 
                                             duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
                                             bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
                                             focus:ring-offset-gray-300 capitalize">
