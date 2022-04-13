@@ -42,6 +42,11 @@
         @endif --}}
         {{-- Add Members Area Ends --}}
 
+        <!-- Session Status -->
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
         {{-- Content --}}
         <div id="slot_settings_page" class="py-4 grid md:grid-cols-2 gap-3">
             {{-- Members --}}
@@ -66,7 +71,7 @@
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">@{{ member.created_at }}</td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                     <!-- Border - Right -->
-                                    <button
+                                    <button v-if="slots.length < max_slot_size"
                                         class="relative inline-flex cursor-grab items-center px-3 overflow-hidden text-green-600 border border-current rounded group active:text-green-500 focus:outline-none focus:ring"
                                         type="button" v-on:click="addToSlot(member)">
                                         <span
@@ -118,7 +123,6 @@
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">User</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Date</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Status</th>
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Comment</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Options</th>
                             </tr>
                         </thead>
@@ -144,9 +148,6 @@
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                     @{{ slot?.slot?.status }}
-                                </td>
-                                <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                    comment
                                 </td>
                                 <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                     <div v-if="slot.slot.is_movable">
@@ -182,7 +183,6 @@
         Vue.createApp({
             data() {
                 return {
-                    message: 'Hello Vue!',
                     members: [],
                     slot_position_swap: [],
                     slots: [],
@@ -222,8 +222,24 @@
 
                 // Sort Saved slots
                 sortSavedSlots() {
-                    /***/
-                    // trift_groups.slot_positions
+                    for (let index = 0; index < this.raw_slots.length; index++) {
+                        let slot = this.raw_slots[index];
+
+                        let slot_template = {
+                            user_id: slot.user_id,
+                            member: {
+                                user: slot.user
+                            },
+                            slot: {
+                                id: slot.id,
+                                is_movable: (slot.is_movable) ? true : false,
+                                status: slot.status,
+                                created_at: slot.created_at
+                            },
+                            is_new: false,
+                        }
+                        this.slots.push(slot_template)
+                    }
                 },
 
                 // Add to slots
@@ -238,7 +254,8 @@
                         slot: {
                             is_movable: true,
                             status: '{{ App\Enums\ThriftSlotStatus::UNPAID }}',
-                        }
+                        },
+                        is_new: true,
                     }
                     this.slots.push(slot_template);
                     // this.slots.sort((a, b) => {
@@ -250,10 +267,6 @@
                 // Remove From Slots
                 removeFromSlot(index) {
                     this.slots.splice(index, 1);
-                    // this.slots.sort((a, b) => {
-                    //     // Sort by position
-                    //     return a.position - b.position
-                    // })
                 },
 
                 // Add slot to position swap
@@ -304,7 +317,8 @@
                 }
             },
             created() {
-                this.loadData()
+                this.loadData();
+                this.sortSavedSlots();
             },
         }).mount('#slot_settings_page')
     </script>

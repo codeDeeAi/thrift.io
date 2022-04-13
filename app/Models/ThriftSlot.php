@@ -29,7 +29,6 @@ class ThriftSlot extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'created_at',
     ];
 
     /**
