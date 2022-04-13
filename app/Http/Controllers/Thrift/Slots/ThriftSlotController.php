@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class ThriftSlotController extends Controller
 {
-    // Show Thrift Slots
+    // Show Thrift Slots Settings
     public function index(Request $request, $token)
     {
         $thrift_group = ThriftGroup::where('token', $token)->select('id', 'user_id', 'token', 'name', 'thrifters', 'start_date', 'schedule', 'slot_positions')->first();
@@ -32,8 +32,35 @@ class ThriftSlotController extends Controller
             return view('user.thrift.slots.index', ['members' => $members, 'thrift_group' => $thrift_group, 'slots' => $slots]);
         }
 
-        return back();
+        return abort(404);
         // return view('user.thrift.settings.index', ['settings' => $settings]);
+    }
+
+    // Show User Thrift Slots
+    public function show(Request $request, $token)
+    {
+        $thrift_group = ThriftGroup::where('token', $token)->select('id', 'user_id', 'token', 'name', 'thrifters', 'start_date', 'schedule', 'slot_positions')->first();
+
+        $slots = ThriftSlot::where('thrift_group_id', $thrift_group->id)->where('user_id', auth()->id())
+            ->select('id', 'user_id', 'thrift_group_id', 'slot_date', 'status', 'is_movable', 'created_at', 'comment')->get();
+
+        return view('user.thrift.slots.show', ['thrift_group' => $thrift_group, 'slots' => $slots]);
+    }
+
+    // Update User Thrift Slot
+    public function update(Request $request, $token, $id)
+    {
+        $this->validate($request, [
+            'comment' => 'nullable|string',
+            'is_movable' => 'required|boolean'
+        ]);
+
+        ThriftSlot::where('id', $id)->update([
+            'comment' => $request->comment,
+            'is_movable' =>  $request->is_movable
+        ]);
+
+        return back()->with('status', 'Updated succesfully !');
     }
 
     // Store and Update Slots

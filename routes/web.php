@@ -50,10 +50,12 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/overview', [ThriftSettingsController::class, 'index'])->name('user.thrift.overview');
             Route::get('/activities', [ThriftSettingsController::class, 'index'])->name('user.thrift.activities');
             Route::get('/slots', [ThriftSlotController::class, 'index'])->name('user.thrift.slots');
+            Route::get('/user_slots', [ThriftSlotController::class, 'show'])->name('user.thrift.slots.show');
 
             // Actions
             Route::post('/settings', [ThriftSettingsController::class, 'update'])->name('user.thrift.settings');
             Route::post('/slots', [ThriftSlotController::class, 'store'])->name('user.thrift.slots');
+            Route::post('/user_slot/{id}', [ThriftSlotController::class, 'update'])->name('user.thrift.slot.update');
         });
     });
 });

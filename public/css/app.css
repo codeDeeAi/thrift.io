@@ -1583,6 +1583,9 @@ select {
 .pt-3 {
   padding-top: 0.75rem;
 }
+.pr-12 {
+  padding-right: 3rem;
+}
 .text-left {
   text-align: left;
 }
