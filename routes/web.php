@@ -25,6 +25,9 @@ Route::get('/', function () {
     return view('guest.home');
 });
 
+// Pricing
+Route::view('/pricing', 'guest.pricing.pricing')->name('pricing');
+
 // Thrift registration
 Route::get('/group_registration/{token}', [ThriftRegistrationController::class, 'index'])->name('thrift.group.registration');
 

@@ -1,6 +1,5 @@
 @extends('layouts.guest')
 @section('content')
-    {{-- $thrift_group = ThriftGroup::where('token', $token)->first('token', 'name', 'amount', 'is_open', 'schedule'); --}}
     <div class="flex justify-around p-4">
         <div
             class=" inline-block p-5 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-lg lg:p-16 sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
