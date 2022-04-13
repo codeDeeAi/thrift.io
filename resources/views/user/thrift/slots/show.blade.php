@@ -113,7 +113,7 @@
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap">{{ $slot->slot_date }}</td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                             <input type="text" name="comment" id="comment" value="{{ $slot->comment }}"
-                                                class="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm" />
+                                                class="p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm" />
                                         </td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                             <button
