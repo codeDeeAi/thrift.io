@@ -1,6 +1,6 @@
 @extends('layouts.user')
 @section('content')
-    <div class="py-4 lg:flex gap-6 h-screen px-4">
+    <div class="py-4 lg:flex gap-6 overflow-y-auto px-4">
         {{-- Container One --}}
         <div class="lg:w-4/6 h-full px-2 space-y-10">
             {{-- Cards --}}
@@ -54,7 +54,7 @@
             <div class="">
                 <p class="h2 font-bold text-lg capitalize">Monthly Tasks</p>
                 <div class="flex justify-end gap-3">
-                    <div class="overflow-hidden p-0.5 border rounded-full dark:border-gray-700">
+                    <div class="overflow-hidden p-0.5 text-xs border rounded-full dark:border-gray-700">
                         <div class="sm:-mx-0.5 flex">
                             <button
                                 class=" focus:outline-none px-3 w-1/2 sm:w-auto py-1 sm:mx-0.5 text-white bg-blue-500 rounded-full">Monthly</button>
@@ -271,15 +271,122 @@
                         </li>
                     </ul>
                 </section>
-
-
                 {{-- Lists Ends --}}
             </div>
             {{-- Activities Ends --}}
         </div>
         {{-- Container One Ends --}}
         {{-- Container Two --}}
-        <div class="lg:w-2/6 h-full bg-green-400 mt-3 lg:mt-0"></div>
+        <div class="lg:w-2/6 h-full mt-3 lg:mt-0 lg:px-16 space-y-20">
+            <div class="space-y-6">
+                <p class="h2 font-bold text-lg capitalize">Today's Schedule</p>
+                <div class="flex justify-between">
+                    <div>
+                        <p class="h4 font-bold text-xs capitalize text-red-500">30 mins call with client</p>
+                        <p class="h3 font-bold capitalize">Project Discovery Call</p>
+                    </div>
+                    <span class="text-blue-400 text-xs"> + Invite</span>
+                </div>
+                <div class="w-full p-3 bg-green-400 shadow-lg rounded-lg flex justify-between text-white">
+                    <div class="flex -space-x-1 overflow-hidden my-auto">
+                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="">
+                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                            src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="">
+                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80"
+                            alt="">
+                        <img class="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            alt="">
+                    </div>
+                    <span>28:35</span>
+                    <span>...</span>
+                </div>
+            </div>
+
+            {{-- ------ --}}
+
+            <div class="space-y-6">
+                <div>
+                    <p class="h2 font-bold text-lg capitalize">Design Project</p>
+                    <p class="h4 font-bold text-xs capitalize text-gray-500">In progress</p>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div>
+                        <span class="text-xs text-gray-500 font-bold capitalize">Connected</span>
+                        <p class="text-2xl font-extrabold">
+                            114
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-500 font-bold capitalize">In progress</span>
+                        <p class="text-2xl font-extrabold">
+                            114
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-500 font-bold capitalize">Team members</span>
+                        <p class="text-2xl font-extrabold">
+                            114
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {{-- ------ --}}
+
+            <div class="space-y-6">
+                <div>
+                    <p class="h2 font-bold text-lg capitalize">New Task</p>
+                    <p class="h4 font-bold text-xs capitalize text-gray-500">Task title</p>
+                </div>
+
+                <div class="relative">
+                    <label class="sr-only" for="email"> Email </label>
+
+                    <input class="w-full py-2 pl-3 text-sm border-1 border-gray-200 rounded-lg" id="email" type="email"
+                        placeholder="Email" />
+
+                    <button class="absolute p-2 text-white -translate-y-1/2 bg-blue-600 rounded-full top-1/2 right-2"
+                        type="button">
+                        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex gap-2">
+                    <strong class="inline-flex items-center bg-gray-100 px-2 py-1.5 rounded-full">
+                        <span class="text-xs truncate font-medium">
+                            Simon Lewis
+                        </span>
+
+                        <img class="object-cover w-6 h-6 rounded-full ml-2.5 -mr-2.5"
+                            src="https://www.hyperui.dev/photos/man-4.jpeg" alt="Simon Lewis">
+                    </strong>
+
+                    <strong class="inline-flex items-center bg-gray-100 px-2 py-1.5 rounded-full">
+                        <img class="object-cover w-6 h-6 rounded-full -ml-2.5 mr-2.5"
+                            src="https://www.hyperui.dev/photos/man-4.jpeg" alt="Simon Lewis">
+
+                        <span class="text-xs truncate font-medium">
+                            Simon Lewis
+                        </span>
+                    </strong>
+                    <strong class="inline-flex items-center bg-gray-100 px-2 py-1.5 rounded-full">
+                        <img class="object-cover w-6 h-6 rounded-full -ml-2.5 mr-2.5"
+                            src="https://www.hyperui.dev/photos/man-4.jpeg" alt="Simon Lewis">
+
+                        <span class="text-xs truncate font-medium">
+                            Simon Lewis
+                        </span>
+                    </strong>
+                </div>
+            </div>
+        </div>
         {{-- Container Two Ends --}}
     </div>
 @endsection

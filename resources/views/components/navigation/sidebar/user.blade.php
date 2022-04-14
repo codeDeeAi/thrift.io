@@ -22,8 +22,8 @@
                 <nav class="flex-1 space-y-1 bg-white">
                     <ul>
                         <li>
-                            <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg bg-gray-50 focus:shadow-outline"
-                                white="" 70="" href="#">
+                            <a class=" inline-flex items-center w-full px-4 py-2 mt-1 text-base text-gray-900 transition duration-500 ease-in-out transform rounded-lg focus:shadow-outline hover:bg-gray-50"
+                                white="" 70="" href="{{ route('user.dashboard') }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
