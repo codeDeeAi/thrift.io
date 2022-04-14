@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboards\UserDashboard;
 use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
 use App\Http\Controllers\Thrift\Groups\ThriftRegistrationController;
 use App\Http\Controllers\Thrift\Members\ThriftMembersController;
@@ -36,9 +37,10 @@ Route::get('/group_registration/{token}', [ThriftRegistrationController::class, 
  */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('/dashboard', [UserDashboard::class, 'index'])->name('user.dashboard');
+    });
 
     Route::group(['prefix' => 'thrift'], function () {
         Route::get('/groups', [ThriftGroupController::class, 'index'])->name('user.thrift.groups');

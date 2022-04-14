@@ -16,7 +16,7 @@
                             <!-- Validation Errors -->
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                            <form action="#" method="POST" class="space-y-6">
+                            <form action="#" method="POST" class="space-y-6" autocomplete="on">
                                 @csrf
 
                                 <!-- Name Address -->
@@ -32,7 +32,7 @@
                                     <x-auth.form.label for="email" :value="__('Email')" />
 
                                     <x-auth.form.input id="email" class="block mt-1 w-full" type="email" name="email"
-                                        :value="old('email')" required autofocus />
+                                        :value="old('email')" required autofocus autocomplete="email" />
                                 </div>
 
                                 <!-- Password -->
@@ -48,7 +48,7 @@
                                     <x-auth.form.label for="password_confirmation" :value="__('Confirm Password')" />
 
                                     <x-auth.form.input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                        name="password_confirmation" required />
+                                        name="password_confirmation" autocomplete="confirm_password" required />
                                 </div>
 
                                 <div class="flex items-center justify-end mt-4">

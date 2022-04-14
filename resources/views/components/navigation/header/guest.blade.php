@@ -35,7 +35,7 @@
 
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}"
+                        <a href="{{ route('user.dashboard') }}"
                             class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}"

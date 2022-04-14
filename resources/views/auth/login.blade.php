@@ -17,7 +17,7 @@
                             <!-- Validation Errors -->
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                            <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                            <form action="{{ route('login') }}" method="POST" class="space-y-6" autocomplete="on">
                                 @csrf
 
                                 {{-- If Group registration link --}}
@@ -32,7 +32,7 @@
                                     <x-auth.form.label for="email" :value="__('Email')" />
 
                                     <x-auth.form.input id="email" class="block mt-1 w-full" type="email" name="email"
-                                        :value="old('email')" required autofocus />
+                                        :value="old('email')" required autofocus autocomplete="email" />
                                 </div>
 
                                 <!-- Password -->
