@@ -89,18 +89,17 @@ class ThriftSlotController extends Controller
         $thrift_start_day = $thrift_start_date_array[2];
 
         foreach ($slot_data as $index => $item) {
-            // Calculate date            
+            // Calculate date   
+            $interval = $index + 1;
+            $new_date = Carbon::createFromDate($thrift_start_year, $thrift_start_month, $thrift_start_day);
             if ($thrift_group->schedule == ThriftSchedule::DAILY) {
-                $new_date = Carbon::createFromDate($thrift_start_year, $thrift_start_month, $thrift_start_day);
-                $new_date->addDays(($index + 1));
+                $new_date->addDays($interval);
             }
             if ($thrift_group->schedule == ThriftSchedule::WEEKLY) {
-                $new_date = Carbon::createFromDate($thrift_start_year, $thrift_start_month, $thrift_start_day);
-                $new_date->addWeeks(($index + 1));
+                $new_date->addWeeks($interval);
             }
             if ($thrift_group->schedule == ThriftSchedule::MONTHLY) {
-                $new_date = Carbon::createFromDate($thrift_start_year, $thrift_start_month, $thrift_start_day);
-                $new_date->addMonths(($index + 1));
+                $new_date->addMonths($interval);
             }
 
             $new_date = Carbon::createFromFormat('Y-m-d H:i:s', $new_date)->format('Y-m-d');
@@ -124,7 +123,7 @@ class ThriftSlotController extends Controller
                 array_push($slot_ids, $slot->id); // Save slot ids
             } else {
                 // Check Position
-                ThriftSlot::where('user_id', $item['user_id'])->where('thrift_group_id', $thrift_group->id)
+                $slot = ThriftSlot::where('id', $item['slot']['id'])
                     ->update([
                         'slot_date' => $new_date
                     ]);
@@ -140,7 +139,7 @@ class ThriftSlotController extends Controller
 
         // Remove deleted slots
         $all_thrift_slots = ThriftSlot::where('thrift_group_id', $thrift_group->id)->select('id')->get();
-        // dd($slot_ids, $all_thrift_slots);
+
         foreach ($all_thrift_slots as $value) {
             if (!in_array($value['id'], $slot_ids)) {
                 ThriftSlot::where('id', $value['id'])->delete();
