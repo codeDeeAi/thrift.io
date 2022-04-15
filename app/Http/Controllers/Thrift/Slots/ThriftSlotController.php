@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Thrift\Slots;
 
+use App\Enums\ThriftActivityType;
 use App\Enums\ThriftSchedule;
 use App\Enums\ThriftSlotStatus;
 use App\Http\Controllers\Controller;
@@ -57,8 +58,10 @@ class ThriftSlotController extends Controller
 
         ThriftSlot::where('id', $id)->update([
             'comment' => $request->comment,
-            'is_movable' =>  $request->is_movable
+            'is_movable' => (ThriftSlot::where('id', $id)->where('status', ThriftSlotStatus::PAID)->exists()) ? 0 : $request->is_movable
         ]);
+
+        create_activity($token, ThriftActivityType::SLOT_STATUS, auth()->user()->name);
 
         return back()->with('status', 'Updated succesfully !');
     }
@@ -148,6 +151,7 @@ class ThriftSlotController extends Controller
             'slot_positions' => json_encode($final_slot_data)
         ]);
 
+        create_activity($token, ThriftActivityType::CHANGED_SLOTS);
 
         return back()->with('status', 'Slots updated successfully');
     }

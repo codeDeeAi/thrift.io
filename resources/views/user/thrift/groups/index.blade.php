@@ -30,5 +30,6 @@
             </a>
         @endforeach
         {{-- Each Group --}}
+        {{ $thrift_groups->links() }}
     </div>
 @endsection

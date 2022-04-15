@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboards\UserDashboard;
+use App\Http\Controllers\Thrift\Activities\ThriftActivityController;
 use App\Http\Controllers\Thrift\Groups\ThriftGroupController;
 use App\Http\Controllers\Thrift\Groups\ThriftRegistrationController;
 use App\Http\Controllers\Thrift\Members\ThriftMembersController;
@@ -53,7 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/members', [ThriftMembersController::class, 'index'])->name('user.thrift.members');
             Route::get('/settings', [ThriftSettingsController::class, 'index'])->name('user.thrift.settings');
             Route::get('/overview', [ThriftSettingsController::class, 'index'])->name('user.thrift.overview');
-            Route::get('/activities', [ThriftSettingsController::class, 'index'])->name('user.thrift.activities');
+            Route::get('/activities', [ThriftActivityController::class, 'index'])->name('user.thrift.activities');
             Route::get('/slots', [ThriftSlotController::class, 'index'])->name('user.thrift.slots');
             Route::get('/user_slots', [ThriftSlotController::class, 'show'])->name('user.thrift.slots.show');
 

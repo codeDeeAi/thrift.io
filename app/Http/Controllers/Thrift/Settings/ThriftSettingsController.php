@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Thrift\Settings;
 
+use App\Enums\ThriftActivityType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Thrift\Group\ThriftGroupFormRequest;
 use App\Models\ThriftGroup;
@@ -29,6 +30,8 @@ class ThriftSettingsController extends Controller
             'details' => $request->details,
             'is_open' => $request->is_open,
         ]);
+
+        create_activity($token, ThriftActivityType::GROUP_OPEN);
 
         return back()->with('status', 'Settings updated succesfully');
     }

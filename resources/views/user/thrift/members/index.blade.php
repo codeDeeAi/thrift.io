@@ -90,7 +90,7 @@
         {{-- Thrifters Ends --}}
 
         {{-- Pagination --}}
-        <x-pagination.pagination></x-pagination.pagination>
+        {{ $members->links() }}
         {{-- Pagination Ends --}}
         {{-- Content Ends --}}
     </div>
