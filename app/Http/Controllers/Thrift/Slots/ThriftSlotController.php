@@ -139,10 +139,11 @@ class ThriftSlotController extends Controller
         }
 
         // Remove deleted slots
-        $all_thrift_slots = ThriftSlot::where('thrift_group_id')->select('id')->get();
+        $all_thrift_slots = ThriftSlot::where('thrift_group_id', $thrift_group->id)->select('id')->get();
+        // dd($slot_ids, $all_thrift_slots);
         foreach ($all_thrift_slots as $value) {
-            if (!in_array($value->id, $slot_ids)) {
-                ThriftSlot::where('id', $value->id)->delete();
+            if (!in_array($value['id'], $slot_ids)) {
+                ThriftSlot::where('id', $value['id'])->delete();
             }
         }
 

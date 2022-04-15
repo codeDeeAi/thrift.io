@@ -101,7 +101,7 @@ if (!function_exists('create_activity')) {
         } else if ($type === ThriftActivityType::DEPOSIT_STATUS) {
             $message = $user_name . ' made a deposit in ' . $group->name . ' thrift group';
         } else if ($type === ThriftActivityType::SLOT_STATUS) {
-            $message = $user_name. 'updated slot status in ' . $group->name . ' thrift group';
+            $message = $user_name. ' updated slot status in ' . $group->name . ' thrift group';
         } else {
             $message = 'Slots were updated in ' . $group->name . ' thrift group';
         }

@@ -249,7 +249,7 @@
                         return;
                     };
                     let slot_template = {
-                        user_id: member.id,
+                        user_id: member.user.id,
                         member: member,
                         slot: {
                             is_movable: true,
@@ -258,10 +258,6 @@
                         is_new: true,
                     }
                     this.slots.push(slot_template);
-                    // this.slots.sort((a, b) => {
-                    //     // Sort by position
-                    //     return a.position - b.position
-                    // })
                 },
 
                 // Remove From Slots
