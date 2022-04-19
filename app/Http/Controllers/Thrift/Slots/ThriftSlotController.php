@@ -8,6 +8,7 @@ use App\Enums\ThriftSlotStatus;
 use App\Http\Controllers\Controller;
 use App\Models\ThriftGroup;
 use App\Models\ThriftSlot;
+use App\Models\User;
 use App\Models\UserThriftGroup;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -48,6 +49,21 @@ class ThriftSlotController extends Controller
         return view('user.thrift.slots.show', ['thrift_group' => $thrift_group, 'slots' => $slots]);
     }
 
+    // Show User Thrift Slots status
+    public function showStatus(Request $request, $token)
+    {
+        $thrift_group = ThriftGroup::where('token', $token)->select('id', 'user_id', 'token', 'name', 'thrifters', 'start_date', 'schedule', 'slot_positions')->first();
+
+        $slots = ThriftSlot::where('thrift_group_id', $thrift_group->id)
+            ->select('id', 'user_id', 'thrift_group_id', 'slot_date', 'status', 'is_movable', 'created_at')
+            ->with('user', function ($query) {
+                $query->select('id', 'name', 'email');
+            })
+            ->get();
+
+        return view('user.thrift.slots.status', ['thrift_group' => $thrift_group, 'slots' => $slots]);
+    }
+
     // Update User Thrift Slot
     public function update(Request $request, $token, $id)
     {
@@ -62,6 +78,25 @@ class ThriftSlotController extends Controller
         ]);
 
         create_activity($token, ThriftActivityType::SLOT_STATUS, auth()->user()->name);
+
+        return back()->with('status', 'Updated succesfully !');
+    }
+    // Update User Thrift Slot Status
+    public function statusUpdate(Request $request, $token, ThriftSlot $thrift_slot)
+    {
+        $this->validate($request, [
+            'status' => 'required|in:' . implode(",", ThriftSlotStatus::getAll())
+        ]);
+
+        if ($thrift_slot->status === ThriftSlotStatus::PAID) {
+            return back();
+        };
+
+        $thrift_slot->update([
+            'status' => $request->status
+        ]);
+
+        create_activity($token, ThriftActivityType::PAYMENT_STATUS, User::where('id', $thrift_slot->user_id)->first()->name);
 
         return back()->with('status', 'Updated succesfully !');
     }
@@ -146,8 +181,10 @@ class ThriftSlotController extends Controller
             }
         }
 
+        // dd($final_slot_data);
+
         // Save thrift group data
-        ThriftGroup::where('id', $thrift_group->id)->update([
+        $saved = ThriftGroup::where('id', $thrift_group->id)->update([
             'slot_positions' => json_encode($final_slot_data)
         ]);
 

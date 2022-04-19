@@ -121,7 +121,7 @@
                                     class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap"></th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Position</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">User</th>
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Date</th>
+                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Created Date</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Status</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Options</th>
                             </tr>

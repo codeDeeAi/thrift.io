@@ -50,17 +50,15 @@
         {{-- Content --}}
         <div class="py-4 flex justify-center gap-3">
             <div class="shadow-sm rounded-lg p-3 overflow-auto border">
-                <p class="font-bold h3 mb-1">My Slots</p>
+                <p class="font-bold h3 mb-1">Slots (Update Status)</p>
                 <div class="overflow-hidden overflow-x-auto border border-gray-100 rounded">
                     <table class="min-w-full text-sm divide-y divide-gray-200">
                         <thead>
                             <tr class="bg-gray-50">
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Created</th>
+                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">User</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Status</th>
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Is Fixed</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Payment Date
                                 </th>
-                                <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Comment</th>
                                 <th class="px-4 py-2 font-medium text-left text-gray-900 whitespace-nowrap">Options</th>
                             </tr>
                         </thead>
@@ -74,49 +72,40 @@
 
                             @foreach ($slots as $slot)
                                 <form
-                                    action="{{ route('user.thrift.slot.update', ['token' => $thrift_group->token, 'id' => $slot->id]) }}"
+                                    action="{{ route('user.thrift.slot.status.update', ['token' => $thrift_group->token, 'thrift_slot' => $slot->id]) }}"
                                     method="POST">
                                     @csrf
 
                                     <tr>
                                         <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap">
-                                            {{ $slot->created_at }}</td>
-                                        <td class="px-4 py-2 text-gray-700 whitespace-nowrap capitalize">
-                                            <strong class="inline-flex items-center bg-gray-100 px-5 py-1.5 rounded-full">
-                                                <span class="text-[12px] font-medium">
-                                                    {{ $slot->status }}
-                                                </span>
-                                            </strong>
+                                            <p class="text-lg font-semibold capitalize"> {{ $slot->user->name }}</p>
+                                            <p class=""> {{ $slot->user->email }}</p>
                                         </td>
-                                        <td class="px-4 py-2 text-gray-700 whitespace-nowrap"> <select name="is_movable"
-                                                id="is_movable" value="{{ $slot->is_movable }}"
+                                        <td class="px-4 py-2 text-gray-700 whitespace-nowrap capitalize">
+                                            <select name="status" id="status" value="{{ $slot->is_movable }}"
                                                 class="block py-2 text-base placeholder-gray-300 transition 
-                                            duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
-                                            bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
-                                            focus:ring-offset-gray-300 capitalize">
-                                                @php
-                                                    $open_values = [1, 0];
-                                                @endphp
-                                                @foreach ($open_values as $val)
-                                                    @if ($val === $slot->is_movable)
-                                                        <option value="{{ $val }}" selected>
-                                                            {{ $val == 0 ? 'Yes' : 'No' }}
+                                                        duration-500 ease-in-out transform border border-transparent rounded-lg text-neutral-600
+                                                        bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 
+                                                        focus:ring-offset-gray-300 capitalize">
+
+                                                @foreach (App\Enums\ThriftSlotStatus::getAll() as $val)
+                                                    @if (strtolower($val) === strtolower($slot->status))
+                                                        <option value="{{ $val }}" selected disabled>
+                                                            {{ $val }}
                                                         </option>
                                                     @else
                                                         <option value="{{ $val }}">
-                                                            {{ $val == 0 ? 'Yes' : 'No' }}
+                                                            {{ $val }}
                                                         </option>
                                                     @endif
                                                 @endforeach
 
-                                            </select></td>
-                                        <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                            <x-auth.form.input class="block mt-1 w-full" type="date"
-                                                value="{{ $slot->slot_date }}" max="{{ $slot->slot_date }}" min="{{ $slot->slot_date }}" />
+                                            </select>
                                         </td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
-                                            <input type="text" name="comment" id="comment" value="{{ $slot->comment }}"
-                                                class="p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm" />
+                                            <x-auth.form.input class="block mt-1 w-full" type="date"
+                                                value="{{ $slot->slot_date }}" max="{{ $slot->slot_date }}"
+                                                min="{{ $slot->slot_date }}" />
                                         </td>
                                         <td class="px-4 py-2 text-gray-700 whitespace-nowrap">
                                             <button
