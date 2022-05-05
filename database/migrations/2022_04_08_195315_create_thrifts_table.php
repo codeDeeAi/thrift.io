@@ -19,7 +19,7 @@ class CreateThriftsTable extends Migration
             $table->foreignId('thrift_group_id');
             $table->bigInteger('position');
             $table->date('due_date');
-            $table->boolean('paid')->default(0);
+            $table->boolean('paid')->default(false);
             $table->timestamps();
         });
     }
