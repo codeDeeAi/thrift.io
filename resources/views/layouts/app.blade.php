@@ -15,11 +15,11 @@
 
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> development --}}
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="/css/app.css">
 
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> development --}}
-    <script src="js/app.js" defer></script>
+    <script src="/js/app.js" defer></script>
 </head>
 
 <body class="font-sans antialiased">
