@@ -5,6 +5,7 @@
         <div class="lg:w-4/6 h-full px-2 space-y-10">
             {{-- Cards --}}
             <div class="grid md:grid-cols-2 gap-6">
+                @if (count($recent_groups) > 0)
                 <a class="relative block p-8 bg-gradient-to-r from-red-400 to-orange-300 shadow-xl rounded-xl" href="">
                     <span
                         class="absolute right-4 top-4 rounded-full px-3 py-1.5 bg-green-100 text-green-600 font-medium text-xs">
@@ -20,9 +21,7 @@
                                 d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                         </svg>
                         <h5 class="mt-4 text-xl font-bold text-gray-900">
-                            @if (count($recent_groups) > 1)
                                 {{ $recent_groups->first()->thrift_group->name }}
-                            @endif
                         </h5>
 
                         <ul class="text-sm">
@@ -34,6 +33,7 @@
                         </ul>
                     </div>
                 </a>
+                @endif
                 @if (count($recent_groups) > 1)
                     <a class="relative block p-8 bg-gradient-to-r from-purple-300 to-purple-400 shadow-xl rounded-xl"
                         href="">
