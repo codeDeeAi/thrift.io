@@ -19,13 +19,13 @@ class CreateThriftGroupsTable extends Migration
             $table->string('token', 35)->unique();
             $table->string('name');
             $table->integer('thrifters')->default(1);
-            $table->double('amount', 10, 2);
-            $table->double('total_amount', 10, 2);
-            $table->json('details')->nullable();
-            $table->boolean('is_open')->default(true);
-            $table->date('start_date');
-            $table->string('schedule');
-            $table->json('slot_positions')->nullable();
+            // $table->double('amount', 10, 2);
+            // $table->double('total_amount', 10, 2);
+            // $table->json('details')->nullable();
+            // $table->boolean('is_open')->default(true);
+            // $table->date('start_date');
+            // $table->string('schedule');
+            // $table->json('slot_positions')->nullable();
             $table->timestamps();
         });
     }
