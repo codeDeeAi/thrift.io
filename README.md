@@ -18,6 +18,13 @@ Thrift.io is an application that helps with collection and organization of thrif
 - Run ``npm install`` and ``npm run dev``.
 - Connect database and run ``php artisan migrate``
 
+## Live Link
+
+[Thrift.io](https://triftio.herokuapp.com/)
+
+``https://triftio.herokuapp.com/``
+
+
 ## Author
 
 Bada Adeola [Github page](https://github.com/codeDeeAi), is a full-stack software developer whose interests lies in creating
