@@ -20,7 +20,9 @@
                                 d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                         </svg>
                         <h5 class="mt-4 text-xl font-bold text-gray-900">
-                            {{ $recent_groups->first()->thrift_group->name }}
+                            @if (count($recent_groups) > 1)
+                                {{ $recent_groups->first()->thrift_group->name }}
+                            @endif
                         </h5>
 
                         <ul class="text-sm">
