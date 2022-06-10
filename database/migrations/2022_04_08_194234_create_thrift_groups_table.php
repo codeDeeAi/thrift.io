@@ -21,11 +21,11 @@ class CreateThriftGroupsTable extends Migration
             $table->integer('thrifters')->default(1);
             $table->float('amount', 10, 2);
             $table->float('total_amount', 10, 2);
-            // $table->json('details')->nullable();
+            $table->json('details')->nullable();
             $table->boolean('is_open')->default(true);
             $table->date('start_date');
             $table->string('schedule');
-            // $table->json('slot_positions')->nullable();
+            $table->json('slot_positions')->nullable();
             $table->timestamps();
         });
     }
