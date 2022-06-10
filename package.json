@@ -9,6 +9,10 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
+    "engines": {
+        "node": ">= 6.9.4",
+        "npm": ">= 4.4.0"
+    },
     "devDependencies": {
         "@tailwindcss/forms": "^0.4.0",
         "alpinejs": "^3.4.2",
