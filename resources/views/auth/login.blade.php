@@ -18,7 +18,7 @@
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
                             <form action="{{ route('login') }}" method="POST" class="space-y-6" autocomplete="on">
-                                @csrf
+                                {{-- @csrf --}}
 
                                 {{-- If Group registration link --}}
                                 @if (request()->get('group_registration'))
